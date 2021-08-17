@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;500&display=swap');
+
+$main: #ffffff;
+$primary: #eeeeee;
+$secondary: #a5bebc;
+$link_dark: #224547;
+$button: #224547;
+$button_link: #ffffff;
+$padding: 3rem;
+$padding_small: 1rem;
+$margin_small: 1rem;
+$border_radius: 1rem;
+$main_font: 'Work Sans', sans-serif;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: $main;
+  display: flex;
+  min-height: 100vh;
+  font-weight: 300;
+  font-family: $main_font;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 500;
+  color: $link_dark;
+}
+
+nav#Nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 20%;
+  padding: 2rem;
+  background-color: $primary;
+}
+
+div#Page {
+  padding: $padding;
+  width: 100%;
+}
+
+section {
+  position: relative;
+}
+
+.full  {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.margin-top-small {
+  margin-top: $margin_small;
+}
+
+button,
+input[type=submit] {
+  border: none;
+  font-family: $main_font;
+  font-size: 1rem;
+}
+
+.button {
+  display: inline-block;
+  cursor: pointer;
+  background-color: $button;
+  color: $button_link;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+section.translations_all {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.translation-card {
+  padding: $padding_small;
+  margin: $margin_small;
+  background-color: $secondary;
+  border-radius: $border_radius;
+}
+
+.third {
+  width: calc(33.33% - (#{$padding_small} * 2) - (#{$margin_small} * 2));
+}
+
+.text-center {
+  text-align: center;
+}
+
+.modal-form {
+  display: none;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.884);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: $padding_small;
+  border-radius: $border_radius;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 1025px) {
+  .button-card:hover {
+    background-color: $link_dark;
+    color: $secondary;
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language - All Translations</title>
+  {% load sass_tags %}
+  <link rel="stylesheet" type="text/css" media="screen" href="{% sass_src 'language_app/styles.scss' %}">
+</head>
+<body>
+  <nav id="Nav">
+    <h1>Welcome {{logged_in_user.username}}!</h1>
+    <a href="/">Home</a>
+    <a href="/all_translations">All Translations</a>
+    <a href="logout">Logout</a>
+  </nav>
+  <div class="page" id="Page">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "success" %}
+          <p class="success">{{message}}</p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <section class="translations_all" id="allTranslations">
+      <a href="/add_translation" class="translation-card third button-card">
+        Add New Translation
+      </a>
+      {% for kor in korean %}
+        <div class="translation-card third">
+          <h2 class="text-center">{{kor.korean}}</h2>
+          <p>English: {{kor.eng_translation.english}}</p>
+          <p>Politeness Level: {{kor.politeness_level}}</p>
+          <div class="flex space-evenly margin-top-small">
+            <a class="button">Edit</a>
+            <button class="button" onclick="deleteConfirm('{{kor.id}}')">Delete</button>
+            <form class="modal-form" id="ModalForm{{kor.id}}" action="/delete_translation" method="post">
+              {% csrf_token %}
+              <p>Are you sure you want to delete {{kor.korean}}?</p>
+              <input type="hidden" name="korean_id" value="{{kor.id}}">
+              <div class="flex space-evenly margin-top-small">
+                <input type="submit" class="button" value="Yes" class="button">
+                <button class="close-modal button" type="button" onclick="closeModal(this)">No</button>
+              </div>
+          </form>
+          </div>
+        </div>
+      {% endfor %}
+    </section>
+  </div>
+</body>
+<script>
+  deleteConfirm = id => {
+    const modalForm = document.getElementById(`ModalForm${id}`);
+    modalForm.style.display = 'flex';
+  }
+
+  closeModal = (elem) => {
+    elem.parentNode.parentNode.style.display = 'none';
+  }
+</script>
+</html>

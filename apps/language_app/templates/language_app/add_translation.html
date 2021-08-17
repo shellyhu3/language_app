@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language - Add Translation</title>
+  {% load sass_tags %}
+  <link rel="stylesheet" type="text/css" media="screen" href="{% sass_src 'language_app/styles.scss' %}">
+</head>
+<body>
+  <nav id="Nav">
+    <h1>Welcome {{logged_in_user.username}}!</h1>
+    <a href="/">Home</a>
+    <a href="/all_translations">All Translations</a>
+    <a href="logout">Logout</a>
+  </nav>
+  <div class="page" id="Page">
+    <div id="add_translation">
+      <h1>Add New Translation</h1>
+      {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == "success" %}
+                  <p class="success">{{message}}</p>
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+      <form action="/submit_translation" method="post">
+        {% csrf_token %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.extra_tags == "author" %}
+                    <p class="error">{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <p>Korean: <textarea name="korean" cols="30" rows="3"></textarea></p>
+        <p>English: <textarea name="english" cols="30" rows="3"></textarea></p>
+        <p>Politeness Level: 
+          <select name="politeness_level" id="politeness_level">
+            <option value="Formal">Formal</option>
+            <option value="Polite">Polite</option>
+            <option value="Casual">Casual</option>
+          </select>
+        </p>
+        <p>Notes: <textarea name="notes" cols="30" rows="3"></textarea></p>
+        <p>Category:</p>
+        <ul>
+            <li>Choose from the list:
+                <select name="category_id">
+                    {% for category in all_categories %}
+                        <option value={{category.id}}>{{category.category}}</option>
+                    {% endfor %}
+                </select>
+            </li>
+            <li>Or add a new category: 
+                <div>
+                    <div>
+                        <input type="text" name="category" placeholder="Category">
+                    </div>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == "category" %}
+                            <p class="error">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </li>
+        </ul>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.extra_tags == "quote" %}
+                    <p class="error">{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language - All Translations</title>
+  {% load sass_tags %}
+  <link rel="stylesheet" type="text/css" media="screen" href="{% sass_src 'language_app/styles.scss' %}">
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/all_translations">All Translations</a>
+    <button onclick="open_popup()" href="/login">Login</button>
+  </nav>
+
+  <div id="my_modal">
+    <div class="reg_login">
+      <h2>Register</h2>
+      <form action="/register" method="post">
+          {% csrf_token %}
+          <p>Username: <br><input type="text" name="username"></p>
+          {% if messages %}
+              {% for message in messages %}
+                  {% if message.extra_tags == "username" %}
+                      <p class="error">{{message}}</p>
+                  {% endif %}
+              {% endfor %}
+          {% endif %}
+          <p>Password: <br><input type="password" name="pw"></p>
+          {% if messages %}
+              {% for message in messages %}
+                  {% if message.extra_tags == "pw" %}
+                      <p class="error">{{message}}</p>
+                  {% endif %}
+              {% endfor %}
+          {% endif %}
+          <input type="submit" value="Register">
+      </form>
+    </div>
+    
+    <div class="reg_login">
+        <h2>Login</h2>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.extra_tags == "login" %}
+                    <p class="error">{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <form action="/login" method="post">
+            {% csrf_token %}
+            <p>Username: <br><input type="text" name="username2"></p>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags == "username" %}
+                        <p class="error">{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <p>Password: <br><input type="password" name="pw2"></p>
+            <input type="submit" value="Log In">
+        </form>
+    </div>
+  </div>
+
+
+
+</body>
+
+<script>
+
+    var modal = document.getElementById('my_modal');
+    modal.style.display = 'none';
+
+    function open_popup() {
+      if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+      } else {
+        modal.style.display = 'block';
+      }
+    }
+
+
+
+</script>
+</html>
